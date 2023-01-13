@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Toko extends Migration
+class Shop extends Migration
 {
     /**
      * Run the migrations.
@@ -18,7 +18,7 @@ class Toko extends Migration
          $table->string("name");
          $table->decimal("shop_rating", $precision=2, $scale=0)->default(0);
          $table->unsignedBigInteger('user_id');
-         $table->foreign('user_id')->references('id')->on('user')->onUpdate('cascade')->onDelete('cascade');
+         $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
          $table->timestamps();
         });
     }
