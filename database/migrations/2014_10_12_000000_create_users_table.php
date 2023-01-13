@@ -18,10 +18,10 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('username')->unique();
-            $table->enum('jenis_kelamin', ['laki-laki', 'perempuan'])->collation('utf8mb4_unicode_ci');
-            $table->text("alamat");
+            $table->enum('gender', ['male', 'female'])->collation('utf8mb4_unicode_ci');
+            $table->text("address");
             $table->binary('photo_profile');
-            $table->timestamp('email_verified_at')->nullable();
+            $table->timestamp('email_verified_at')->nullable(true);
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

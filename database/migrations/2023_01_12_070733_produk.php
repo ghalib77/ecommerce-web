@@ -13,16 +13,16 @@ class Produk extends Migration
      */
     public function up()
     {
-        Schema::create('produk',function(Blueprint $table){
+        Schema::create('product',function(Blueprint $table){
             $table->id();
-            $table->string("nama");
-            $table->string('harga');
-            $table->binary('photo_produk');
-            $table->text('deskripsi');
-            $table->string('banyak_produk');
-            $table->decimal("rating_produk", $precision=2, $scale=0)->default(0);
-            $table->unsignedBigInteger('toko_id');
-            $table->foreign('toko_id')->references('id')->on('toko')->onUpdate('cascade')->onDelete('cascade');
+            $table->string("name");
+            $table->string('price');
+            $table->binary('photo_product');
+            $table->text('description');
+            $table->string('quantity');
+            $table->decimal("product_rating", $precision=2, $scale=0)->default(0);
+            $table->unsignedBigInteger('shop_id');
+            $table->foreign('shop_id')->references('id')->on('shop')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }

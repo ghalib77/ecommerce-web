@@ -13,10 +13,10 @@ class Toko extends Migration
      */
     public function up()
     {
-        Schema::create('toko',function(Blueprint $table){
+        Schema::create('shop',function(Blueprint $table){
          $table->id();
-         $table->string("nama");
-         $table->decimal("rating_toko", $precision=2, $scale=0)->default(0);
+         $table->string("name");
+         $table->decimal("shop_rating", $precision=2, $scale=0)->default(0);
          $table->unsignedBigInteger('user_id');
          $table->foreign('user_id')->references('id')->on('user')->onUpdate('cascade')->onDelete('cascade');
          $table->timestamps();
