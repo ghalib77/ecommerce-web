@@ -2,6 +2,9 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\VerifyEmailController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,3 +20,30 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::middleware(['cors'])->group(function(){
+
+    //User
+    Route::prefix('/user')->middleware('jwt.verify')->group(function(){
+        Route::get('/', [UserController::class, 'index']);
+        Route::get('/{token}', [UserController::class, 'show']);
+        Route::post('/{id}', [UserController::class, 'update']);
+        Route::delete('/{id}', [UserController::class, 'destroy']);
+    });
+
+    // Authentication routes
+    Route::prefix('/auth')->group(function(){
+        Route::post('/register', [AuthController::class, 'register']);
+        Route::post('/login', [AuthController::class, 'login']);
+    });
+
+    // Verify email
+    Route::get('/email/verify/{id}/{hash}', [VerifyEmailController::class, 'verify'])
+    ->middleware(['signed', 'throttle:6,1'])
+    ->name('verification.verify');
+
+    // Resend link to verify email
+    Route::post('/email/verify/resend/{id}',[VerifyEmailController::class, 'resend'])
+    ->middleware(['throttle:6,1'])->name('verification.send');
+});
+
