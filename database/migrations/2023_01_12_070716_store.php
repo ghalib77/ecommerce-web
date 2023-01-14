@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Shop extends Migration
+class Store extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class Shop extends Migration
      */
     public function up()
     {
-        Schema::create('shop',function(Blueprint $table){
+        Schema::create('store',function(Blueprint $table){
          $table->id();
          $table->string("name");
-         $table->decimal("shop_rating", $precision=2, $scale=0)->default(0);
+         $table->binary("store_image")->nullable(true);
          $table->unsignedBigInteger('user_id');
          $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
          $table->timestamps();

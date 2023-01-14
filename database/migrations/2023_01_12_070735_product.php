@@ -22,8 +22,8 @@ class Product extends Migration
             $table->string('quantity');
             $table->string('sold_total');
             $table->decimal("product_rating", $precision=2, $scale=0)->default(0);
-            $table->unsignedBigInteger('shop_id');
-            $table->foreign('shop_id')->references('id')->on('shop')->onUpdate('cascade')->onDelete('cascade');
+            $table->unsignedBigInteger('store_id');
+            $table->foreign('store_id')->references('id')->on('store')->onUpdate('cascade')->onDelete('cascade');
             $table->unsignedBigInteger('category_id');
             $table->foreign('category_id')->references('id')->on('category')->onDelete('restrict')->onUpdate('cascade'); 
             $table->timestamps();
