@@ -15,9 +15,7 @@ class Category extends Migration
     {
         Schema::create('category',function(Blueprint $table){
             $table->id();
-            $table->string("nama");
-            $table->unsignedBigInteger('produk_id');
-            $table->foreign('produk_id')->references('id')->on('produk'); 
+            $table->string("name");
             $table->timestamps();
         });
     }
