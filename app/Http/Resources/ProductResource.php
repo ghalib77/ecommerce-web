@@ -6,6 +6,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 use App\Http\Resources\StoreResource;
 use App\Http\Resources\CategoryResource;
+use App\Http\Resources\OrderResource;
 
 class ProductResource extends JsonResource
 {
@@ -26,6 +27,7 @@ class ProductResource extends JsonResource
             "product_rating"=>$this->product_rating,
             "category"=>new CategoryResource($this->whenLoaded('category')),
             "store"=>new StoreResource($this->whenLoaded('store')),
+            "order"=>OrderResource::collection($this->whenLoaded('order')),
             'created_at' => (new DateTime($this->created_at))->format('Y-m-d H:i:s')
         ];
     }
