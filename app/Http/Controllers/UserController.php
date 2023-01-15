@@ -37,7 +37,7 @@ class UserController extends Controller
     public function show($token)
     {
         try{
-            $user=new UserResource(JWTAuth::toUser($token));
+            $user=new UserResource(JWTAuth::toUser($token)->load('store'));
             return response()->json([
                 'data'=>$user
             ],200);
@@ -60,15 +60,19 @@ class UserController extends Controller
         $validator=Validator::make($request->all(),[
           'name'=>['required', 'string'],
           'username'=>['required', 'string', Rule::unique('users')->ignore($user->id)],
+          'email'=>['required', 'email', Rule::unique('users')->ignore($user->id)]
         ]);
-        $photo_profile="";
+        $photo_profile=null;
 
         if($validator->fails()){
           return response()->json($validator->messages(),402);
         }
  
-        if($request->hasFile("photo_profile")){
+        if($request->hasFile("photo_profile") && $request->file("photo_profile") !== null){
           $photo_profile=$request->file("photo_profile")->store("image", "public");
+            if($user->photo_profile !== null && \File::exists(public_path('storage/'.$user->photo_profile))){
+                \File::delete(public_path('storage/'.$user->photo_profile));
+            }
         }
 
         $user->update([
@@ -76,11 +80,12 @@ class UserController extends Controller
           "username"=>$request->username,
           "gender"=>$request->gender ?? null,
           "address"=>$request->address ?? null,
-          "photo_profile"=>$photo_profile ?? null
+          "photo_profile"=>$photo_profile ? $photo_profile : $user->photo_profile 
         ]);
 
         return response()->json([
-          "message"=>"user has been updated"
+          "message"=>"user has been updated",
+          "newData"=>new UserResource($user)
         ],200);
       }catch(\Throwable $th){
         return response()->json($th->getMessage(), 500);
@@ -95,10 +100,16 @@ class UserController extends Controller
     public function destroy($id)
     {
         try{
-           User::destroy($id);
-           return response()->json([
-            'message'=>"user has been deleted"
-           ],200);
+          $user=User::findOrFail($id);
+
+          if($user->photo_profile !== null && \File::exists(public_path('storage/'.$user->photo_profile))){
+              \File::delete(public_path('storage/'.$user->photo_profile));
+          }
+  
+          $user->delete();
+          return response()->json([
+          'message'=>"user has been deleted"
+          ],200);
         }catch(\Throwable $th){
             return response()->json($th->getMessage(), 500);
         }
