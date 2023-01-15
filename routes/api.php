@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\VerifyEmailController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\StoreController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +30,16 @@ Route::middleware(['cors'])->group(function(){
         Route::get('/{token}', [UserController::class, 'show']);
         Route::post('/{id}', [UserController::class, 'update']);
         Route::delete('/{id}', [UserController::class, 'destroy']);
+    });
+
+     //User
+     Route::prefix('/store')->middleware('jwt.verify')->group(function(){
+        Route::get('/', [StoreController::class, 'index']);
+        Route::get('/{id}', [StoreController::class, 'show']);
+        Route::get('/like/{search}', [StoreController::class, 'like']);
+        Route::post('/', [StoreController::class, 'store']);
+        Route::post('/{id}', [StoreController::class, 'update']);
+        Route::delete('/{id}', [StoreController::class, 'destroy']);
     });
 
     // Authentication routes
