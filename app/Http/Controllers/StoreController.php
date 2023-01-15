@@ -26,7 +26,7 @@ class StoreController extends Controller
     public function show($id)
     {
         try{
-            $store=new StoreResource(Store::findOrFail($id));
+            $store=new StoreResource(Store::findOrFail($id)->load(['product', 'product.order', 'product.category']));
             return response()->json(['data'=>$store], 200);
         }catch(\Throwable $th){
             return response()->json($th->getMessage(),500);
