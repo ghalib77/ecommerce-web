@@ -4,6 +4,8 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
+use App\Http\Resources\ProductResource;
+
 class CategoryResource extends JsonResource
 {
     /**
@@ -16,7 +18,8 @@ class CategoryResource extends JsonResource
     {
         return [
             'id'=>$this->id,
-            'name'=>$this->name
+            'name'=>$this->name,
+            'product'=> ProductResource::collection($this->whenLoaded('product'))
         ];
     }
 }
