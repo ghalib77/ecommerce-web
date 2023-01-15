@@ -5,6 +5,8 @@ namespace App\Http\Resources;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Nette\Utils\DateTime;
 
+use App\Http\Resources\StoreResource;
+
 class UserResource extends JsonResource
 {
     /**
@@ -24,6 +26,7 @@ class UserResource extends JsonResource
             'email_verified_at'=> $this->email_verified_at,
             'address'=> $this->address,
             'created_at' => (new DateTime($this->created_at))->format('Y-m-d H:i:s'),
+            'store' => new StoreResource($this->whenLoaded('store'))
         ];
     }
 }
