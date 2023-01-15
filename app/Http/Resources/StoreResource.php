@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\ProductResource;
 
 class StoreResource extends JsonResource
 {
@@ -18,7 +19,8 @@ class StoreResource extends JsonResource
           "id"=>$this->id,
           "name"=>$this->name,
           "store_image"=>$this->store_image,
-          "location"=>$this->location
+          "location"=>$this->location,
+          "product"=>ProductResource::collection($this->whenLoaded('product'))
         ];
     }
 }
