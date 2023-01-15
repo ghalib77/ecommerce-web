@@ -15,8 +15,9 @@ class Store extends Migration
     {
         Schema::create('store',function(Blueprint $table){
          $table->id();
-         $table->string("name");
+         $table->string("name")->unique();
          $table->binary("store_image")->nullable(true);
+         $table->string("location");
          $table->unsignedBigInteger('user_id');
          $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
          $table->timestamps();
