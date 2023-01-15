@@ -18,6 +18,7 @@ class Order extends Migration
             $table->string('quantity');
             $table->enum('payment_method', ['cod', 'debit','alfamart','tokopay','indomaret','tokopaylater'])->collation('utf8mb4_unicode_ci');
             $table->unsignedBigInteger('product_id');
+            $table->enum('has_payed', ['false', 'true','pending'])->collation('utf8mb4_unicode_ci');
             $table->foreign('product_id')->references('id')->on('product')->onUpdate('cascade')->onDelete('cascade');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');

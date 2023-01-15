@@ -20,6 +20,7 @@ class OrderResource extends JsonResource
         return [
             'product'=>new ProductResource($this->whenLoaded('product')),
             'quantity'=>$this->quantity,
+            'has_payed'=>$this->has_payed,
             'payment_method'=>$this->payment_method,
             'user'=>new UserResource($this->whenLoaded('user'))
         ];

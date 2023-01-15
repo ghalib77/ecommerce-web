@@ -14,7 +14,8 @@ class Order extends Model
         'quantity',
         'payment_method',
         'product_id',
-        'user_id'
+        'user_id',
+        'has_payed'
     ];
 
     public function order(){
