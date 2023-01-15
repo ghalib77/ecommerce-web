@@ -5,6 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 use App\Http\Resources\StoreResource;
+use App\Http\Resources\CategoryResource;
 
 class ProductResource extends JsonResource
 {
@@ -23,6 +24,7 @@ class ProductResource extends JsonResource
             "description"=>$this->description,
             "quantity"=>$this->quantity,
             "product_rating"=>$this->product_rating,
+            "category"=>new CategoryResource($this->whenLoaded('category')),
             "store"=>new StoreResource($this->whenLoaded('store')),
             'created_at' => (new DateTime($this->created_at))->format('Y-m-d H:i:s')
         ];
