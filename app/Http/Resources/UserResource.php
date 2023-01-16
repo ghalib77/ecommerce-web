@@ -6,6 +6,8 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use Nette\Utils\DateTime;
 
 use App\Http\Resources\StoreResource;
+use App\Http\Resources\CardResource;
+use App\Http\Resources\OrderResource;
 
 class UserResource extends JsonResource
 {
@@ -25,8 +27,10 @@ class UserResource extends JsonResource
             'photo_profile'=> $this->photo_profile,
             'email_verified_at'=> $this->email_verified_at,
             'address'=> $this->address,
+            'store' => new StoreResource($this->whenLoaded('store')),
+            'card'=>CardResource::collection($this->whenLoaded('card')),
+            'order'=>OrderResource::collection($this->whenLoaded('order')),
             'created_at' => (new DateTime($this->created_at))->format('Y-m-d H:i:s'),
-            'store' => new StoreResource($this->whenLoaded('store'))
         ];
     }
 }
