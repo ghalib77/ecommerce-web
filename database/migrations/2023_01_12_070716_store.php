@@ -17,7 +17,7 @@ class Store extends Migration
          $table->id();
          $table->string("name")->unique();
          $table->binary("store_image")->nullable(true);
-         $table->string("location");
+         $table->text("location");
          $table->unsignedBigInteger('user_id');
          $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
          $table->timestamps();
