@@ -16,7 +16,7 @@ class Order extends Migration
         Schema::create('order',function(Blueprint $table){
             $table->id();
             $table->string('quantity');
-            $table->enum('payment_method', ['cod', 'debit','alfamart','tokopay','indomaret','tokopaylater'])->collation('utf8mb4_unicode_ci');
+            $table->enum('payment_method', ['cod', 'alfamart','indomaret', 'debit'])->collation('utf8mb4_unicode_ci');
             $table->unsignedBigInteger('product_id');
             $table->enum('has_payed', ['false', 'true','pending'])->collation('utf8mb4_unicode_ci');
             $table->foreign('product_id')->references('id')->on('product')->onUpdate('cascade')->onDelete('cascade');
