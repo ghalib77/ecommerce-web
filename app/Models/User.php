@@ -58,4 +58,12 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
     {
         return $this->hasOne(Store::class, 'user_id', 'id');
     }
+    public function card()
+    {
+        return $this->hasMany(Card::class, 'user_id', 'id');
+    }
+    public function order()
+    {
+        return $this->hasMany(Order::class, 'user_id', 'id');
+    }
 }
